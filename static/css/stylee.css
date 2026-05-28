@@ -1,0 +1,654 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F6;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "montserrat", sans-serif;
+}
+main {
+    flex: 1;
+    margin-top: 0;  /* El hero ya es full viewport, no necesita margen */
+
+    
+}
+
+/* Navbar */
+.lv-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    z-index: 10;
+    box-sizing: border-box;
+    background: linear-gradient(
+        to bottom,
+        rgba(180, 180, 180, 0.50),
+        rgba(180, 180, 180, 0)
+    );
+}
+
+.lv-navbar a {
+    text-decoration: none;
+    font-family: "montserrat", sans-serif;
+    color: #00001a;
+    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.lv-navbar a:hover {
+    opacity: 0.7;
+}
+
+.lv-nav-left {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.lv-nav-right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-right: 0px;
+}
+
+.lv-nav-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.lv-nav-logo img {
+    height: 55px;
+    width: auto;
+}
+
+/* Encabezado/Hero */
+.lv-encabezado {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin-top: 0;
+    background-image: url("/static/img/encabezadoe.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #000020;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 56%;
+    box-sizing: border-box;
+}
+
+.lv-encabezado h2 {
+    font-family: "montserrat", sans-serif;
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+    max-width: 600px;
+}
+
+.lv-encabezado p {
+    font-family: "montserrat", sans-serif;
+    font-size: clamp(1.2rem, 1.5vw, 2rem);
+    margin: 0 0 30px 0;
+    max-width: 500px;
+    line-height: 1.4;
+}
+
+.lv-cta-box {
+    border: 2px solid #00001a;
+    border-radius: 5px;
+    width: 180px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.lv-cta-box a {
+    text-decoration: none;
+    color: #000020;
+    font-family: "montserrat", sans-serif;
+    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lv-cta-box:hover {
+    background-color: #00001a;
+}
+
+.lv-cta-box:hover a {
+    color: #e0e0e0;
+}
+
+/* Dropdown Menu */
+.lv-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.lv-dropdown-toggle {
+    cursor: pointer;
+}
+
+.lv-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    background: linear-gradient(
+        to top,
+        rgba(180,180,180,0.20),
+        rgba(180,180,180,0)
+    );
+    border-radius: 10px;
+    padding: 8px;
+    width: 165px;
+    box-shadow: 0 10px 25px linear-gradient(
+        to top, rgba(0,0,0,0.25), rgba(0,0,0,0.0));
+    border: none;
+    list-style: none;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lv-dropdown-menu.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(10px);
+    pointer-events: auto;
+}
+
+.lv-dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    color: #00001a;
+    text-decoration: none;
+    font-family: "montserrat", sans-serif;
+    font-size: 1.3rem;
+    transition: background 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.lv-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.lv-dropdown--right .lv-dropdown-menu {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(-4px);
+}
+
+.lv-dropdown--right .lv-dropdown-menu.show {
+  transform: translateX(0) translateY(10px);
+}
+/* Contenedor principal de productos */
+.lv-products-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+/* Contenedor principal */
+.lv-search-form {
+    display: flex;
+    align-items: center;
+    background: rgb(255, 255, 255, 0);
+    border-radius: 0px;
+    border-bottom: 1.5px solid #00001a;
+    padding: 10px 10px;
+    width: 100%;
+    max-width: 250px;
+    gap: 10px;
+}
+
+.lv-search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: "montserrat", sans-serif;
+    font-size: 1rem;
+    color: #00001a;
+    flex: 1;
+}
+
+.lv-search-input::placeholder {
+    color: #bbb;
+}
+
+.lv-search-divider {
+    width: 1px;
+    height: 22px;
+    background: #ccc;
+}
+
+.lv-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    color: #00001a;
+    transition: opacity 0.2s ease;
+}
+
+.lv-search-btn:hover {
+    opacity: 0.7;
+}
+
+/* Cada categoría */
+.lv-category {
+  margin-bottom: 60px;
+}
+
+.lv-category-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e0e0e0;
+  color: #111;
+}
+
+/* Grid de tarjetas estilo Amazon */
+.lv-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+/* Tarjeta individual */
+.lv-product-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.lv-product-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+  border-color: #ddd;
+}
+
+/* Wrapper de imagen para mantener proporción */
+.lv-card-img-wrapper {
+  background: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.lv-card-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+
+.lv-product-card:hover .lv-card-img {
+  transform: scale(1.02);
+}
+
+/* Contenido de la tarjeta */
+.lv-card-content {
+  padding: 15px;
+}
+
+.lv-card-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 8px;
+  color: #0f1111;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.6em;
+}
+
+button.lv-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+    font-family: "montserrat", sans-serif;
+}
+
+.lv-card-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #B12704;  /* color típico Amazon */
+  margin: 8px 0 12px;
+}
+
+.lv-card-btn {
+  display: inline-block;
+  background:#00001a;
+  border: 1px solid #000012;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lv-card-btn:hover {
+  background: #000012;
+  text-decoration: none;
+  color: #fff;
+}
+.lv-card-btn2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #00001a;
+  border: 1px solid #000012;
+  color: #fff;
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  transition: background 0.2s;
+  box-sizing: border-box;
+}
+.lv-product-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 15px;
+}
+.lv-product-card {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
+}
+/* Responsive: en móviles 2 columnas */
+@media (max-width: 640px) {
+  .lv-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .lv-card-title {
+    font-size: 0.85rem;
+  }
+  .lv-card-price {
+    font-size: 1rem;
+  }
+}
+/* Footer */
+footer {
+    background: #11100E;
+    color: #fff;
+    padding: 60px 40px 20px;
+    margin-top: auto;
+}
+
+.lv-footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.lv-footer-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.lv-footer-column h4 {
+    font-family: "montserrat", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+}
+
+.lv-footer-column h4::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: #fff;
+    opacity: 0.5;
+}
+
+.lv-footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lv-footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.lv-footer-column ul li a {
+    text-decoration: none;
+    color: #aaa;
+    font-family: "montserrat", sans-serif;
+    font-size: 0.9rem;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    display: inline-block;
+}
+
+.lv-footer-column ul li a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.lv-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.lv-footer-logo img {
+    width: 55px;
+    height: auto;
+    filter: brightness(0) invert(1);
+}
+
+.lv-footer-logo span {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.lv-footer-description {
+    color: #aaa;
+    font-family: "montserrat", sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.lv-contact-info li {
+    color: #aaa;
+    font-family: "montserrat", sans-serif;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lv-contact-info li a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.lv-contact-info li a:hover {
+    color: #fff;
+}
+
+.lv-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.lv-footer-bottom p {
+    color: #777;
+    font-family: "montserrat", sans-serif;
+    font-size: 0.8rem;
+}
+
+/* Font Faces */
+@font-face {
+    font-family: "montserrat";
+    src: url("/static/assets/font/Montserrat-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "montserrat";
+    src: url("/static/assets/font/Montserrat-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .lv-encabezado {
+        padding-left: 50%;
+    }
+
+    .lv-encabezado h2 {
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
+    }
+
+    .lv-encabezado p {
+        font-size: clamp(1rem, 1.3vw, 1.5rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .lv-navbar {
+        padding: 15px 20px;
+    }
+
+    .lv-nav-left {
+        gap: 15px;
+    }
+
+    .lv-nav-right {
+        margin-right: 20px;
+    }
+
+    .lv-navbar a {
+        font-size: 0.9rem;
+    }
+
+    .lv-nav-logo img {
+        height: 40px;
+    }
+
+    .lv-encabezado {
+        padding-left: 20px;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding-bottom: 100px;
+    }
+
+    .lv-encabezado h2 {
+        font-size: 2rem;
+        max-width: 100%;
+    }
+
+    .lv-encabezado p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .lv-cta-box {
+        width: 160px;
+        height: 45px;
+    }
+
+    .lv-cta-box a {
+        font-size: 1rem;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .lv-nav-left {
+        gap: 10px;
+    }
+
+    .lv-navbar a {
+        font-size: 0.8rem;
+    }
+
+    .lv-nav-logo img {
+        height: 35px;
+    }
+
+    .lv-dropdown-menu {
+        min-width: 140px;
+    }
+
+    .lv-dropdown-item {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}

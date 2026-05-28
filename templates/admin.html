@@ -1,0 +1,259 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{url_for('static',filename='/css/style.css')}}">
+{% endblock %}
+
+{% block title %}Panel de Administración{% endblock %}
+{% block content %}
+  <!-- Cabecera principal horizontal -->
+  <div class="header-bar">
+        <div class="header-left">
+            <div class="brand-mini">
+                <img src="/static/img/LVVBlogoalt.png" alt="Logo" height="35" style="border-radius: 6px;">
+                <span class="company-name">Lexis Visum</span>
+            </div>
+            <div class="main-nav">
+                <a href="#" data-nav="dashboard" class="nav-active">Dashboard</a>
+                <a href="#" data-nav="clientes">Clientes</a>
+                <a href="#" data-nav="inventario">Inventario</a>
+                <a href="#" data-nav="transacciones">Transacciones</a>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-dropdown">
+                <a href="#" class="user-profile" id="userMenuBtn">
+                    <span>Administrador</span>
+                    <span class="dropdown-icon">▼</span>
+                </a>
+                <ul class="dropdown-options" id="userDropdown">
+                    <li><a href="#">Perfil personal</a></li>
+                    <li><a href="#">Preferencias</a></li>
+                    <li><a href="#">Salir</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL LATERAL IZQUIERDO -->
+    <div class="side-panel">
+        <div class="panel-header">
+            <h4>Navegación Rápida</h4>
+        </div>
+
+        <div class="panel-group">
+            <div class="group-label">Control de Usuarios</div>
+            <ul>
+                <li><a data-section="directorio">Directorio de usuarios</a></li>
+                <li><a data-section="registro">Registrar nuevo usuario</a></li>
+                <li><a data-section="permisos">Permisos y accesos</a></li>
+                <li><a data-section="metricas">Métricas de usuarios</a></li>
+            </ul>
+        </div>
+
+        <div class="panel-group">
+            <div class="group-label">Comercial y Ventas</div>
+            <ul>
+                <li><a data-section="pedidos"> Pedidos activos</a></li>
+                <li><a data-section="compras"> Detalle de compras</a></li>
+                <li><a data-section="seguimiento"> Seguimiento de pedidos</a></li>
+            </ul>
+        </div>
+
+        <div class="panel-group">
+            <div class="group-label">Catálogo de Productos</div>
+            <ul>
+                <li><a data-section="productos"> Listado de artículos</a></li>
+                <li><a data-section="registrar-productos"> Nuevo artículo</a></li>
+                <li><a data-section="clasificaciones"> Clasificaciones</a></li>
+            </ul>
+        </div>
+
+        <div class="panel-group">
+            <div class="group-label">Ajustes del Sistema</div>
+            <ul>
+                <li><a data-section="puntosEntrega"> Puntos de entrega</a></li>
+                <li><a data-section="pagos"> Formas de pago</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ÁREA PRINCIPAL (contenido dinámico) -->
+    <main class="work-area" id="workArea">
+        <!-- SECCIÓN DASHBOARD (visible por defecto) -->
+        <div id="dashboard-section" class="content-section active-section">
+            <div class="area-header">
+                <h2>Bienvenido al Centro de Control</h2>
+                <p>Administra tu negocio de manera eficiente</p>
+            </div>
+            <div class="indicator-grid">
+                <div class="indicator-card">
+                    <h3>Usuarios activos</h3>
+                    <!-- <div class="indicator-value">1,234</div> -->
+                    <!-- <span>+12 en la última semana</span> -->
+                </div>
+                <div class="indicator-card">
+                    <h3>Ventas realizadas</h3>
+                    <!--<div class="indicator-value">456</div>
+                    <span>+8 hoy</span>-->
+                </div>
+                <div class="indicator-card">
+                    <h3>Productos en stock</h3>
+                    <!--<div class="indicator-value">789</div>
+                    <span>Disponibles</span>-->
+                </div>
+                <div class="indicator-card">
+                    <h3>Facturación total</h3>
+                    <!--<div class="indicator-value">$12,345</div>
+                    <span>Acumulado del mes</span>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: DIRECTORIO DE USUARIOS -->
+        <div id="directorio-section" class="content-section">
+            <div class="area-header">
+                <h2>Directorio de usuarios</h2>
+                <p>Gestiona los perfiles registrados en la plataforma</p>
+            </div>
+            <table class="data-table" >
+              <thead>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th class="clave">Clave</th>
+                <th>Correo</th>
+                <th>Perfil</th>
+              </thead>
+              <tbody>
+              {% for U in users %}
+              <tr>
+              <td>{{U[0]}}</td>
+              <td>{{U[1]}}</td>
+              <td>{{U[2]}}</td>
+              <td>{{U[3][:30]}}</td>
+              <td>{{U[4]}}</td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN: REGISTRAR NUEVO USUARIO (formulario oculto inicialmente) -->
+        <div id="registro-section" class="content-section">
+            <div class="area-header">
+                <h2>Registrar nuevo usuario</h2>
+                <p>Complete los datos para crear una cuenta en el sistema</p>
+            </div>
+            <div class="form-panel">
+                <div id="registerMessage" class="message" style="display: none;"></div>
+                <form id="registerForm" action="/iUsuario" method="post">
+                    <div class="input-group">
+                        <input type="text" name="nombre" id="registerName" required placeholder=" ">
+                        <label for="registerName">Nombre completo</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" name="correo" id="registerEmail" required placeholder=" ">
+                        <label for="registerEmail">Correo electrónico</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="clave" id="registerPassword" required minlength="6" placeholder=" ">
+                        <label for="registerPassword">Contraseña</label>
+                    </div>
+                    <div class="input-group">
+                        <select id="registerUserType" name="perfil" required>
+                            <option value="" disabled selected>Selecciona un tipo</option>
+                            <option value="A">Administrador</option>
+                            <option value="U">Usuario</option>
+                        </select>
+                        <label for="registerUserType">Tipo de usuario</label>
+                    </div>
+                    <button type="submit" class="btn-submit">Registrar usuario</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: PERMISOS Y ACCESOS 
+        <div id="permisos-section" class="content-section">
+            <div class="area-header">
+                <h2>Permisos y accesos</h2>
+                <p>Configura niveles de acceso para cada rol</p>
+            </div>
+            <div class="placeholder-card">
+                <p> Panel de gestión de permisos (en desarrollo). Aquí podrás asignar roles y políticas de acceso.</p>
+            </div>
+        </div>
+-->
+        <!-- SECCIÓN: MÉTRICAS DE USUARIOS 
+        <div id="metricas-section" class="content-section">
+            <div class="area-header">
+                <h2>Métricas de usuarios</h2>
+                <p>Comportamiento y estadísticas de los usuarios activos</p>
+            </div>
+            <div class="indicator-grid">
+                <div class="indicator-card"><h3>Usuarios nuevos (mes)</h3><div class="indicator-value">84</div><span>+23% vs mes anterior</span></div>
+                <div class="indicator-card"><h3>Tasa de retención</h3><div class="indicator-value">76%</div><span>Estable</span></div>
+                <div class="indicator-card"><h3>Sesiones promedio</h3><div class="indicator-value">12 min</div><span>Por día</span></div>
+            </div>
+        </div>
+          -->
+        <!-- Secciones extra (comercial, catálogo, etc) -->
+        <div id="pedidos-section" class="content-section"><div class="placeholder-card"><h3> Pedidos activos</h3><p>Visualiza los pedidos actuales y su estado de envío.</p></div></div>
+        <div id="compras-section" class="content-section"><div class="placeholder-card"><h3> Detalle de compras</h3><p>Historial de compras por cliente y artículos adquiridos.</p></div></div>
+        <div id="seguimiento-section" class="content-section"><div class="placeholder-card"><h3> Seguimiento de pedidos</h3><p>Rastreo de envíos y actualizaciones logísticas.</p></div></div>
+        <div id="productos-section" class="content-section"><div class="placeholder-card"><h3> Listado de artículos</h3><p>Gestión completa del inventario y precios.</p></div></div>
+        
+        <div id="registrar-productos-section" class="content-section"><div class="placeholder-card"><h3> Nuevo artículo</h3><p>Añadir un nuevo producto al catálogo.</p></div>
+            <div class="form-panel">
+                <div id="registerMessage" class="message" style="display: none;"></div>
+                <form id="registerForm" action="/iproducto" method="post">
+                    <div class="input-group">
+                        <input type="text" name="nombreProducto" id="registerName" required placeholder=" ">
+                        <label for="registerName">Nombre</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="nombreProducto" id="registerName" required placeholder=" ">
+                        <label for="registerName">Nombre</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="descripcion" id="registerDescription" placeholder=" ">
+                        <label for="registerDescription">Descripción</label>
+                    </div>
+                    <div class="input-group">
+                        <<select id="registerUserType" name="perfil" required>
+                            <option value="" disabled selected>Selecciona la versión</option>
+                            <option value="Edu">Administrador</option>
+                            <option value="Essential">Usuario</option>
+                            <option value="Kids">Administrador</option>
+                            <option value="Pro">Usuario</option>
+                            <option value="Edu">Administrador</option>
+                            <option value="Essential">Usuario</option>
+                        </select>
+                        <label for="registerUserType">Tipo de usuario</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" name="precio" id="registerPrice" required placeholder=" ">
+                        <label for="registerPrice">Precio</label>
+                    </div>
+                    <div class="input-group">
+                        <select id="registerUserType" name="perfil" required>
+                            <option value="" disabled selected>Selecciona un tipo</option>
+                            <option value="A">Administrador</option>
+                            <option value="U">Usuario</option>
+                        </select>
+                        <label for="registerUserType">Tipo de usuario</label>
+                    </div>
+                    <button type="submit" class="btn-submit">Registrar producto</button>
+                </form>
+            </div>
+        </div>
+        
+        
+        <div id="clasificaciones-section" class="content-section"><div class="placeholder-card"><h3> Clasificaciones</h3><p>Categorías y etiquetas de productos.</p></div></div>
+        <div id="puntosEntrega-section" class="content-section"><div class="placeholder-card"><h3> Puntos de entrega</h3><p>Configuración de sucursales y direcciones.</p></div></div>
+        <div id="pagos-section" class="content-section"><div class="placeholder-card"><h3> Formas de pago</h3><p>Métodos de pago aceptados y comisiones.</p></div></div>
+        <div id="clientes-section" class="content-section"><div class="placeholder-card"><h3> Gestión de Clientes</h3><p>Listado de clientes, contactos y fidelización.</p></div></div>
+        <div id="inventario-section" class="content-section"><div class="placeholder-card"><h3> Inventario general</h3><p>Stock crítico y alertas de reposición.</p></div></div>
+        <div id="transacciones-section" class="content-section"><div class="placeholder-card"><h3> Transacciones</h3><p>Movimientos financieros y reportes.</p></div></div>
+    </main>
+  {%endblock%}
+  

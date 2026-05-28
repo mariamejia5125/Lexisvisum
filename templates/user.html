@@ -1,0 +1,247 @@
+{% extends 'layout.html' %}
+{% block styles %}
+  <link rel="stylesheet" href="{{url_for('static',filename='/css/stylee.css')}}">
+{% endblock %}
+
+{% block title %}Lexis visum-Lectura que se adapta a tí  {% endblock %}
+{% block content %}
+<header>
+    <nav class="lv-navbar">
+
+      <div class="lv-nav-left">
+        <a href="#">Inicio</a>
+        <div class="lv-nav-item lv-dropdown">
+        <a href="#" class="lv-dropdown-toggle">Nuestras lineas</a>
+            <ul class="lv-dropdown-menu">
+            <li><a class="lv-dropdown-item" href="#Essential">Essential</a></li>
+            <li><a class="lv-dropdown-item" href="#Kids">Kids</a></li>
+            <li><a class="lv-dropdown-item" href="#Edu">Edu</a></li>
+            <li><a class="lv-dropdown-item" href="#Executive">Executive</a></li>
+            <li><a class="lv-dropdown-item" href="#Pro">Pro</a></li>
+            </ul>
+          </div>
+      </div>
+      <div class="lv-nav-logo">
+        <img src="/static/img/LVVBlogo.png" alt="logo">
+      </div>
+
+      <div class="lv-nav-right">
+        <form class="lv-search-form">
+    <input class="lv-search-input" type="text" placeholder="Buscar">
+    <div class="lv-search-divider"></div>
+    <button class="lv-search-btn" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+    </button>
+</form>
+  <div class="lv-nav-item lv-dropdown lv-dropdown--right">
+    <a href="#" class="lv-dropdown-toggle">{{ current_user.nombre }}</a>
+    <ul class="lv-dropdown-menu">
+      <li><a class="lv-dropdown-item" href="#">Mi perfil</a></li>
+      <li><a class="lv-dropdown-item" href="#">Carrito
+        <span id="cart-badge" class="cart-badge" style="display:none;">0</span>
+      </a></li>
+      <li><a class="lv-dropdown-item" href="/signout">Cerrar sesión</a></li>
+    </ul>
+  </div>
+</div>
+      
+    </nav>
+  </header>
+  <div class="lv-encabezado">
+    <h2>Comprensión aumentada.</h2>
+    <p>Lentes inteligentes con OCR e IA diseñados para comprender texto en tiempo real.</p>
+    <div class="lv-cta-box">
+    <a href="#" class="lv-button">Conoce más</a>
+    </div>
+  </div>
+ <section id="nuestras-lineas" class="lv-products-container">
+
+  <!-- Essential -->
+  <div class="lv-category">
+    <h2 class="lv-category-title" id="Essential">Essential</h2>
+    <div class="lv-product-grid">
+      {% for L in essential %}
+      <div class="lv-product-card">
+        <div class="lv-card-img-wrapper">
+          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[4]) }}" alt="{{ L[0] }}">
+        </div>
+        <div class="lv-card-content">
+          <h3 class="lv-card-title">{{ L[0] }}</h3>
+          <div class="lv-card-price">${{ "%.2f"|format(L[3]) }}</div>
+          <a href="#" class="lv-card-btn">Añadir al carrito &nbsp; &nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="12" x2="20" y2="12"/>
+              <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Kids -->
+  <div class="lv-category">
+    <h2 class="lv-category-title" id="Kids">Kids</h2>
+    <div class="lv-product-grid">
+      {% for L in kids %}
+      <div class="lv-product-card">
+        <div class="lv-card-img-wrapper">
+          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[5]) }}" alt="{{ L[0] }}">
+        </div>
+        <div class="lv-card-content">
+          <h3 class="lv-card-title">{{ L[1] }}</h3>
+          <div class="lv-card-price">${{ "%.2f"|format(L[4]) }}</div>
+          <form method="POST" action="/add_to_cart">
+          <input type="hidden" name="product_id" value="{{ L[0] }}">
+          <button type="submit" class="lv-card-btn">
+            Añadir al carrito &nbsp; &nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="12" x2="20" y2="12"/>
+              <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Edu -->
+  <div class="lv-category">
+    <h2 class="lv-category-title" id="Edu">Edu</h2>
+    <div class="lv-product-grid">
+      {% for L in edu %}
+      <div class="lv-product-card">
+        <div class="lv-card-img-wrapper">
+          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[4]) }}" alt="{{ L[0] }}">
+        </div>
+        <div class="lv-card-content">
+          <h3 class="lv-card-title">{{ L[0] }}</h3>
+          <div class="lv-card-price">${{ "%.2f"|format(L[3]) }}</div>
+          <a href="#" class="lv-card-btn">Añadir al carrito &nbsp; &nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="12" x2="20" y2="12"/>
+              <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Executive -->
+  <div class="lv-category">
+    <h2 class="lv-category-title" id="Executive">Subcripciones Executive</h2>
+    <div class="lv-product-grid">
+      {% for executive in executive %}
+      <div class="lv-product-card">
+        <div class="lv-card-img-wrapper">
+        </div>
+        <div class="lv-card-content">
+          <h3 class="lv-card-title">{{ executive[0] }}</h3>
+          <div class="lv-card-price">${{ "%.2f"|format(executive[1]) }}</div>
+          <button class="lv-card-btn" data-id="{{ executive[0] }}">
+              Añadir al carrito &nbsp;&nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="12" x2="20" y2="12"/>
+            <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Pro -->
+  <div class="lv-category">
+    <h2 class="lv-category-title" id="Pro">Pro</h2>
+    <div class="lv-product-grid">
+      {% for L in pro %}
+      <div class="lv-product-card">
+        <div class="lv-card-img-wrapper">
+          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[4]) }}" alt="{{ L[0] }}">
+        </div>
+        <div class="lv-card-content">
+          <h3 class="lv-card-title">{{ L[0] }}</h3>
+          <div class="lv-card-price">${{ "%.2f"|format(L[3]) }}</div>
+          <!-- En cada tarjeta de producto -->
+          <button class="lv-card-btn" data-id="{{ L[0] }}">
+              Añadir al carrito &nbsp;&nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="12" x2="20" y2="12"/>
+            <line x1="12" y1="4" x2="12" y2="20"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</section>
+  </section>
+  <footer>
+  <div class="lv-footer-container">
+    <div class="lv-footer-column">
+      <div class="lv-footer-logo">
+        <img src="/static/img/LVVBlogo.png" alt="Lexis Visum">
+        <span>Lexis Visum</span>
+      </div>
+      <p class="lv-footer-description">Lectura que se adapta a ti. Tecnología OCR e IA para una comprensión aumentada.</p>
+    </div>
+    
+    <div class="lv-footer-column">
+      <h4>Nuestras líneas</h4>
+      <ul>
+        <li><a href="#">Essential</a></li>
+        <li><a href="#">Kids</a></li>
+        <li><a href="#">Edu</a></li>
+        <li><a href="#">Executive</a></li>
+        <li><a href="#">Pro</a></li>
+      </ul>
+    </div>
+    
+    <div class="lv-footer-column">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Aviso legal</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">Términos de uso</a></li>
+        <li><a href="#">Política de cookies</a></li>
+      </ul>
+    </div>
+    
+    <div class="lv-footer-column">
+      <h4>Contacto</h4>
+      <ul class="lv-contact-info">
+        <li><img src="/static/icons/mail (1).png" alt=""> <a href="mailto:info@lexisvisum.com">info@lexisvisum.com</a></li>
+        <li><img src="/static/icons/phone.png" alt="telefono"> <a href="tel:+523310155059">+52 3310155059</a></li>
+        <li><img src="/static/icons/location.png" alt="locacion">897 Av. Insurgentes Centro
+Ciudad de México, Cd. de México</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lv-footer-bottom">
+    <p>&copy; 2026 Lexis Visum. Todos los derechos reservados.</p>
+  </div>
+</footer>
+{%endblock%}

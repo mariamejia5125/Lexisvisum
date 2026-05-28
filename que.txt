@@ -1,0 +1,42 @@
+.dropdown-menu {
+  /*display: none;
+  position: absolute;
+  background-color:rgba(180,180,180,0.15);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 9999; /* Asegura que esté por encima de la imagen encabezado 
+  top: 100%;    Justo debajo del texto 
+  left: 0;
+  padding: 15px 0;
+  margin: 0;
+  list-style: none;
+  border-radius: 4px;*/
+  position: absolute;
+  top: 100%;
+  left:(-5px);
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 10px 0;
+  width: 180px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255, 255, 255, 0);
+  margin-top: 10px;
+  list-style: none;
+  z-index: 1000;
+  
+  /* Estado oculto con tu animación */
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+/* Clase para mostrarlo */
+.dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* Permite hacer clic cuando es visible */
+}

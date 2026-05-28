@@ -1,0 +1,505 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg-primary: #f0f2f5;
+            --bg-sidebar: #1e2a3a;
+            --bg-topbar: #0f1720;
+            --text-light: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #94a3b8;
+            --border-color: #2d3a48;
+            --hover-bg: #2d3a48;
+            --accent-color: #3b82f6;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-primary);
+        }
+
+        /* ========== CABECERA PRINCIPAL ========== */
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55px;
+            background: var(--bg-topbar);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .brand-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-name {
+            color: var(--text-light);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .main-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .main-nav a:hover {
+            color: var(--text-light);
+        }
+
+        .main-nav a.nav-active {
+            color: var(--text-light);
+        }
+
+        .main-nav a.nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-profile {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.05);
+            transition: background 0.2s;
+            font-size: 14px;
+        }
+
+        .user-profile:hover {
+            background: var(--hover-bg);
+        }
+
+        .dropdown-icon {
+            font-size: 10px;
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-sidebar);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 180px;
+            list-style: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .dropdown-options.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(8px);
+        }
+
+        .dropdown-options li a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .dropdown-options li a:hover {
+            background: var(--hover-bg);
+            color: var(--text-light);
+            padding-left: 28px;
+        }
+
+        /* ========== PANEL LATERAL ========== */
+        .side-panel {
+            position: fixed;
+            top: 55px;
+            left: 0;
+            width: 270px;
+            height: calc(100vh - 55px);
+            background: var(--bg-sidebar);
+            overflow-y: auto;
+            z-index: 90;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+        }
+
+        .side-panel::-webkit-scrollbar {
+            width: 5px;
+        }
+        .side-panel::-webkit-scrollbar-track {
+            background: var(--bg-sidebar);
+        }
+        .side-panel::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .panel-header {
+            padding: 20px 20px 12px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+
+        .panel-header h4 {
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .panel-group {
+            margin-bottom: 20px;
+        }
+
+        .group-label {
+            padding: 12px 20px 6px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .panel-group ul {
+            list-style: none;
+        }
+
+        .panel-group ul li a {
+            display: block;
+            padding: 10px 20px 10px 28px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .panel-group ul li a:hover {
+            background: var(--hover-bg);
+            color: var(--text-light);
+            border-left-color: var(--accent-color);
+            padding-left: 32px;
+        }
+
+        .panel-group ul li a.active-link {
+            background: rgba(59,130,246,0.15);
+            color: white;
+            border-left-color: var(--accent-color);
+        }
+
+        /* ========== ÁREA DE TRABAJO ========== */
+        .work-area {
+            margin-left: 270px;
+            margin-top: 55px;
+            height: calc(100vh - 55px);
+            overflow-y: auto;
+            padding: 28px 32px;
+            background: var(--bg-primary);
+        }
+
+        .work-area::-webkit-scrollbar {
+            width: 8px;
+        }
+        .work-area::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        .work-area::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+
+        /* ===== SECCIONES ===== */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .content-section.active-section {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .area-header {
+            margin-bottom: 28px;
+        }
+
+        .area-header h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .area-header p {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        /* Tarjetas dashboard */
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .indicator-card {
+            background: var(--card-bg);
+            padding: 22px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: all 0.25s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .indicator-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+        }
+
+        .indicator-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .indicator-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .indicator-card span {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* Tablas y formularios */
+        .data-table {
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 13px;
+        }
+        
+
+        .data-table td {
+            font-size: 13px;
+            color: #334155;
+        }
+        .data-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Define anchos para cada columna */
+.data-table th:nth-child(1) { width: 5%; }  /* ID */
+.data-table th:nth-child(2) { width: 20%; }  /* Nombre */
+.data-table th:nth-child(3) { width: 50%; }  /* Clave cifrada (la que hará scroll) */
+.data-table th:nth-child(4) { width: 25%; }  /* Estado */
+
+/* Aplica scroll solo a los td de la columna de clave */
+.data-table td:nth-child(3) {
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 0; /* Necesario para que overflow funcione con table-layout:fixed */
+}
+
+        .badge {
+            background: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge.admin { background: #dbeafe; color: #1e40af; }
+        .badge.user { background: #dcfce7; color: #166534; }
+
+        /* Formulario registro */
+        .form-panel {
+            background: white;
+            max-width: 750px;   /* Antes era 550px */
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 40px;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f6;
+            
+
+        }
+
+        .form-panel h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            outline: none;
+            transition: 0.2s;
+            background: #fff;
+            font-family: inherit;
+        }
+        
+
+        .input-group label {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 0 5px;
+            color: #64748b;
+            font-size: 13px;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label,
+        .input-group select:focus ~ label,
+        .input-group select:valid ~ label {
+            top: 0px;
+            font-size: 11px;
+            color: var(--accent-color);
+        }
+
+        .btn-submit {
+            background: var(--accent-color);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #2563eb;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            background: #f1f5f9;
+            font-size: 13px;
+        }
+
+        .placeholder-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            color: #475569;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 768px) {
+            .side-panel {
+                transform: translateX(-100%);
+                transition: transform 0.2s;
+            }
+            .work-area {
+                margin-left: 0;
+            }
+            .main-nav { display: none; }
+            .indicator-grid { grid-template-columns: 1fr; }
+        }

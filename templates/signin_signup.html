@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% block styles %}
+  <link rel="stylesheet" href="{{url_for('static',filename='/css/styleee.css')}}">
+{% endblock %}
+{% block title %}Lexis visum-Lectura que se adapta a tí  <link rel="icon" href="/static/img/LVVBlogo.png">{% endblock %}
+{% block content %}
+    <div class="container">
+           {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="forms-container">
+            <div class="forms-wrapper" id="formsWrapper">
+                
+                <div class="form-panel login-form">
+                    <h2>Iniciar Sesión</h2>
+                    <div id="loginMessage" class="message"></div>
+                    <form id="loginForm" action="/signin" method="post">
+                        <div class="input-group">
+                            <input type="email" name="correo" id="loginEmail" required>
+                            <label for="loginEmail">Correo electrónico</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="clave"id="loginPassword" required>
+                            <label for="loginPassword">Contraseña</label>
+                        </div>
+                        <button type="submit" class="btn-submit">Iniciar Sesión</button>
+                    </form>
+                    <div class="register-link">
+                        ¿Eres nuevo? <button class="btn-toggle" id="showRegisterBtn">Regístrate</button>
+                    </div>
+                </div>
+
+                <!-- Formulario de Registro -->
+                <div class="form-panel register-form">
+                    <h2>Registrarse</h2>
+                    <div id="registerMessage" class="message"></div>
+                    <form id="registerForm" action="/signup" method="post">
+                        <div class="input-group">
+                            <input type="text" name= "nombre" id="registerName" required>
+                            <label for="registerName">Nombre completo</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="registerEmail" name="correo" required m>
+                            <label for="registerEmail">Correo electrónico</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="registerPassword" name="clave" required minlength="6">
+                            <label for="registerPassword">Contraseña</label>
+                        </div>
+                        <button type="submit" class="btn-submit">Registrarse</button>
+                    </form>
+                    <div class="register-link">
+                        ¿Ya tienes cuenta? <button class="btn-toggle" id="showLoginBtn">Inicia Sesión</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Overlay -->
+       
+    </div>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{%endblock%}
