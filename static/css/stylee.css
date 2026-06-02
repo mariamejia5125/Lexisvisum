@@ -222,10 +222,40 @@ main {
     border-bottom: 1.5px solid #00001a;
     padding: 10px 10px;
     width: 100%;
-    max-width: 250px;
+    max-width: 260px;
     gap: 10px;
 }
+/* Estilo para el formulario */
+.lv-dropdown-item-form {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    width: 100%;
+}
 
+/* Estilo para el botón dentro del formulario */
+.lv-dropdown-item-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    color: #00001a;
+    text-decoration: none;
+    font-family: "montserrat", sans-serif;
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.lv-dropdown-item-btn:hover {
+     background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+}
 .lv-search-input {
     border: none;
     outline: none;
@@ -259,6 +289,28 @@ main {
 
 .lv-search-btn:hover {
     opacity: 0.7;
+}
+
+.separador {
+    border: none;
+        height: 2px;
+        background: rgb(0, 0, 26,0.5);
+        margin: 20px 0 30px 0;
+        border-radius: 3px;
+}
+.separador2 {
+    border: none;
+        height: 0.1rem;
+        background: rgb(0, 0, 26,0.2);
+        margin: 20px 0 30px 0;
+        border-radius: 3px;
+}
+.separadort {
+    border: none;
+        height: 2px;
+        background: rgb(0, 0, 26,0);
+        margin: 20px 0 30px 0;
+        border-radius: 3px;
 }
 
 /* Cada categoría */
@@ -418,6 +470,103 @@ button.lv-card-btn {
     font-size: 1rem;
   }
 }
+
+ .lv-table-container {
+            max-width: 1200px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+            padding: 30px;
+        }
+
+        .lv-table-title {
+            font-family: "montserrat", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #00001a;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .lv-product-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: "montserrat", sans-serif;
+            font-size: 0.9rem;
+            min-width: 600px;
+        }
+
+        .lv-product-table thead tr {
+            background: #00001a;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .lv-product-table th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .lv-product-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eaeaea;
+            color: #1a1a2e;
+        }
+
+        .lv-product-table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .lv-product-table tbody tr:hover {
+            background: #f8f8fa;
+        }
+
+        /* Colores especiales para fechas de warranty */
+        .lv-warranty-expiring {
+            color: #e67e22;
+            font-weight: 600;
+        }
+
+        .lv-warranty-expired {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .lv-warranty-valid {
+            color: #27ae60;
+            font-weight: 500;
+        }
+
+        /* Botón de acción (opcional) */
+        .lv-action-btn {
+            background: #00001a;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: "montserrat", sans-serif;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .lv-action-btn:hover {
+            background: #33334d;
+        }
+
+        /* Mensaje sin datos */
+        .lv-empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-family: "montserrat", sans-serif;
+        }
 /* Footer */
 footer {
     background: #11100E;

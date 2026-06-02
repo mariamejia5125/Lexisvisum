@@ -341,7 +341,7 @@
         }
 
         /* Tablas y formularios */
-        .data-table {
+        .data-table, .data-table-products {
             width: 100%;
             background: white;
             border-radius: 20px;
@@ -350,7 +350,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .data-table th, .data-table td {
+        .data-table th, .data-table td, .data-table-products th, .data-table-products td {
             padding: 14px 18px;
             text-align: left;
             border-bottom: 1px solid #eef2f6;
@@ -372,15 +372,57 @@
     table-layout: fixed;
     width: 100%;
 }
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.modal-box h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
 
 /* Define anchos para cada columna */
 .data-table th:nth-child(1) { width: 5%; }  /* ID */
 .data-table th:nth-child(2) { width: 20%; }  /* Nombre */
-.data-table th:nth-child(3) { width: 50%; }  /* Clave cifrada (la que hará scroll) */
-.data-table th:nth-child(4) { width: 25%; }  /* Estado */
+.data-table th:nth-child(3) { width: 20%; }  /* Clave cifrada (la que hará scroll) */
+.data-table th:nth-child(4) { width: 30%; }  /* Estado */
+.data-table th:nth-child(5) { width: 10%; }  /* Perfil */
+.data-table th:nth-child(6) { width: 15%; }  /* Acciones */
+
+.data-table-products th:nth-child(1) { width: 5%;  }  /* ID */
+.data-table-products th:nth-child(2) { width: 20%; }  /* Nombre */
+.data-table-products th:nth-child(3) { width: 25%; }  /* Descripción */
+.data-table-products th:nth-child(4) { width: 10%; }  /* Versión */
+.data-table-products th:nth-child(5) { width: 10%; }  /* Categoría */
+.data-table-products th:nth-child(6) { width: 10%; }  /* Inventario */
+.data-table-products th:nth-child(7) { width: 10%; }  /* Precio */
+.data-table-products th:nth-child(8) { width: 10%; }  
+  /* Acciones */
 
 /* Aplica scroll solo a los td de la columna de clave */
-.data-table td:nth-child(3) {
+.data-table td:nth-child(3), .data-table th:nth-child(4) {
     overflow-x: auto;
     white-space: nowrap;
     max-width: 0; /* Necesario para que overflow funcione con table-layout:fixed */
@@ -503,3 +545,128 @@
             .main-nav { display: none; }
             .indicator-grid { grid-template-columns: 1fr; }
         }
+
+        /* ================= BOTONES DE ACCIÓN (estilo LV) ================= */
+
+/* Botón Editar - estilo primary */
+.lv-btn-editar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #00001a;
+    border: 1px solid #000012;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.lv-btn-editar:hover {
+    background: #0a0a2a;
+    border-color: #1a1a3a;
+    text-decoration: none;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.lv-btn-editar:active {
+    transform: translateY(1px);
+}
+
+/* Botón Eliminar - estilo danger */
+.lv-btn-eliminar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #1a0000;
+    border: 1px solid #2a0000;
+    color: #ffaaaa;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.lv-btn-eliminar:hover {
+    background: #2a0000;
+    border-color: #3a0000;
+    color: #ff6666;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.lv-btn-eliminar:active {
+    transform: translateY(1px);
+}
+
+/* Versión circular (estilo btn2) */
+.lv-btn-editar-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #00001a;
+    border: 1px solid #000012;
+    color: #fff;
+    width: 60px;
+    height: 30px;
+    border-radius: 10%;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.lv-btn-editar-circle:hover {
+    background: #0a0a2a;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.lv-btn-eliminar-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a0000;
+    border: 1px solid #2a0000;
+    color: #ffaaaa;
+    width: 60px;
+    height: 30px;
+    border-radius: 10%;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.lv-btn-eliminar-circle:hover {
+    background: #2a0000;
+    color: #ff6666;
+    transform: scale(1.05);
+}
+
+/* Grupo de acciones para tablas */
+.lv-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Ajuste para formulario inline */
+form[style*="display:inline"] {
+    display: inline-flex;
+}

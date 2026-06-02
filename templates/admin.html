@@ -29,7 +29,9 @@
                 <ul class="dropdown-options" id="userDropdown">
                     <li><a href="#">Perfil personal</a></li>
                     <li><a href="#">Preferencias</a></li>
-                    <li><a href="#">Salir</a></li>
+                    <li> <form  method="GET" action="{{ url_for('signout') }}">
+                    <button type="submit">Cerrar sesión</button>
+                    </form></li>
                 </ul>
             </div>
         </div>
@@ -129,7 +131,7 @@
               <tr>
               <td>{{U[0]}}</td>
               <td>{{U[1]}}</td>
-              <td>{{U[2]}}</td>
+              <td>{{U[2][:30]}}</td>
               <td>{{U[3][:30]}}</td>
               <td>{{U[4]}}</td>
               </tr>
@@ -172,30 +174,83 @@
             </div>
         </div>
 
-        <!-- SECCIÓN: PERMISOS Y ACCESOS 
-        <div id="permisos-section" class="content-section">
+       
+<div id="permisos-section" class="content-section">
+    <div class="area-header">
+        <h2>Permisos y accesos</h2>
+        <p>Configura niveles de acceso para cada rol</p>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th class="clave">Clave</th>
+                <th>Correo</th>
+                <th>Perfil</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for U in users %}
+            <tr>
+                <td>{{ U[0] }}</td>
+                <td>{{ U[1] }}</td>
+                <td>{{ U[2][:30] }}</td>
+                <td>{{ U[3][:30] }}</td>
+                <td>{{ U[4] }}</td>
+                <td>
+                    <div class="lv-actions">
+    <a href="?editar={{ U[0] }}" class="lv-btn-editar-circle">editar</a>
+    <form action="{{ url_for('eliminar_usuario', id=U[0]) }}" method="POST" style="display:inline;">
+        <button type="submit" class="lv-btn-eliminar-circle">borrar</button>
+    </form>
+</div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+        <div id="productos-section" class="content-section">
             <div class="area-header">
-                <h2>Permisos y accesos</h2>
-                <p>Configura niveles de acceso para cada rol</p>
+                <h2>Productos</h2>
+                <p>Gestiona los productos registrados en la plataforma</p>
             </div>
-            <div class="placeholder-card">
-                <p> Panel de gestión de permisos (en desarrollo). Aquí podrás asignar roles y políticas de acceso.</p>
-            </div>
+            <table class="data-table-products" >
+              <thead>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th class="clave">Descripcion</th>
+                <th>Version</th>
+                <th>Categoria</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+              </thead>
+              <tbody>
+              {% for P in products %}
+              <tr>
+              <td>{{P[0]}}</td>
+              <td>{{P[1]}}</td>
+              <td>{{P[2]}}</td>
+              <td>{{P[3]}}</td>
+              <td>{{P[4]}}</td>
+              <td>{{P[5]}}</td>
+              <td>{{P[6]}}</td>
+              <td>{{P[7]}}</td>
+              <td><a href="?editar_producto={{ P[0] }}" class="btn-danger">Editar</a>
+                <form action="{{ url_for('eliminar_producto', id=P[0]) }}" method="POST" style="display:inline;">
+                <button type="submit" class="lv-btn-eliminar-circle">borrar</button>
+                </form>
+                </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
         </div>
--->
-        <!-- SECCIÓN: MÉTRICAS DE USUARIOS 
-        <div id="metricas-section" class="content-section">
-            <div class="area-header">
-                <h2>Métricas de usuarios</h2>
-                <p>Comportamiento y estadísticas de los usuarios activos</p>
-            </div>
-            <div class="indicator-grid">
-                <div class="indicator-card"><h3>Usuarios nuevos (mes)</h3><div class="indicator-value">84</div><span>+23% vs mes anterior</span></div>
-                <div class="indicator-card"><h3>Tasa de retención</h3><div class="indicator-value">76%</div><span>Estable</span></div>
-                <div class="indicator-card"><h3>Sesiones promedio</h3><div class="indicator-value">12 min</div><span>Por día</span></div>
-            </div>
-        </div>
-          -->
         <!-- Secciones extra (comercial, catálogo, etc) -->
         <div id="pedidos-section" class="content-section"><div class="placeholder-card"><h3> Pedidos activos</h3><p>Visualiza los pedidos actuales y su estado de envío.</p></div></div>
         <div id="compras-section" class="content-section"><div class="placeholder-card"><h3> Detalle de compras</h3><p>Historial de compras por cliente y artículos adquiridos.</p></div></div>
@@ -255,5 +310,116 @@
         <div id="inventario-section" class="content-section"><div class="placeholder-card"><h3> Inventario general</h3><p>Stock crítico y alertas de reposición.</p></div></div>
         <div id="transacciones-section" class="content-section"><div class="placeholder-card"><h3> Transacciones</h3><p>Movimientos financieros y reportes.</p></div></div>
     </main>
+    </main> <!-- cierre del work-area -->
+     {% if producto_editar %}
+<div class="modal-overlay" id="modalEditar">
+    <div class="modal-box">
+        <h3>Editar producto</h3>
+        <form action="{{ url_for('editar_producto', id=producto_editar[0]) }}" method="POST">
+            <div class="input-group">
+                <input type="text" name="nombre" id="editNombre"
+                       value="{{ producto_editar[1] }}" required placeholder=" ">
+                <label for="editNombre">Nombre</label>
+            </div>
+            <div class="input-group">
+                <input type="text" name="descripcion" id="editDescripcion"
+                       value="{{ producto_editar[2] }}" required placeholder=" ">
+                <label for="editDescripcion">Descripción</label>
+            </div>
+            <div class="input-group">
+                <select name="version" id="editVersion" required>
+                    <option value="" disabled>Selecciona una versión</option>
+                    <option value="Essential" {% if producto_editar[3] == 'Essential' %}selected{% endif %}>Essential</option>
+                    <option value="Kids"      {% if producto_editar[3] == 'Kids'      %}selected{% endif %}>Kids</option>
+                    <option value="Edu"       {% if producto_editar[3] == 'Edu'       %}selected{% endif %}>Edu</option>
+                    <option value="Pro"       {% if producto_editar[3] == 'Pro'       %}selected{% endif %}>Pro</option>
+                </select>
+                <label for="editVersion">Versión</label>
+            </div>
+            <div class="input-group">
+                <select name="categoria" id="editCategoria" required>
+                    <option value="" disabled>Selecciona una categoría</option>
+                    <option value="1" {% if producto_editar[4] == 1 %}selected{% endif %}>Smart Glasses</option>
+                    <option value="2" {% if producto_editar[4] == 2 %}selected{% endif %}>Accessories</option>
+                    <option value="3" {% if producto_editar[4] == 3 %}selected{% endif %}>Processing Device</option>
+                </select>
+                <label for="editCategoria">Categoría</label>
+            </div>
+            <div class="input-group">
+                <input type="number" name="inventario" id="editInventario"
+                       value="{{ producto_editar[5] }}" required placeholder=" ">
+                <label for="editInventario">Inventario</label>
+            </div>
+            <div class="input-group">
+                <input type="number" name="precio" id="editPrecio"
+                       value="{{ producto_editar[6] }}" required placeholder=" ">
+                <label for="editPrecio">Precio</label>
+            </div>
+            <div class="input-group">
+                <input type="text" name="imagen" id="editImagen"
+                       value="{{ producto_editar[7] }}" required placeholder=" ">
+                <label for="editImagen">Ruta imagen</label>
+            </div>
+            <div class="modal-actions">
+                <a href="{{ url_for('admin') }}" class="btn-danger">Cancelar</a>
+                <button type="submit" class="btn-submit">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active-section'));
+        document.getElementById('productos-section').classList.add('active-section');
+    });
+</script>
+{% endif %}
+    {% if user_editar %}
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-box">
+            <h3>Editar usuario</h3>
+            <form action="{{ url_for('editar_usuario', id=user_editar[0]) }}" method="POST">
+                <div class="input-group">
+                    <input type="text" name="nombre" id="editNombre"
+                           value="{{ user_editar[1] }}" required placeholder=" ">
+                    <label for="editNombre">Nombre completo</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="correo" id="editCorreo"
+                           value="{{ user_editar[3] }}" required placeholder=" ">
+                    <label for="editCorreo">Correo electrónico</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="clave" id="editClave" placeholder=" ">
+                    <label for="editClave">Contraseña (vacío = no cambiar)</label>
+                </div>
+                <div class="input-group">
+                    <select name="perfil" id="editPerfil" required>
+                        <option value="" disabled>Selecciona un tipo</option>
+                        <option value="A" {% if user_editar[4] == 'A' %}selected{% endif %}>Administrador</option>
+                        <option value="U" {% if user_editar[4] == 'U' %}selected{% endif %}>Usuario</option>
+                    </select>
+                    <label for="editPerfil">Tipo de usuario</label>
+                </div>
+                <div class="modal-actions">
+                    <a href="{{ url_for('admin') }}" class="btn-danger">Cancelar</a>
+                    <button type="submit" class="btn-submit">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cuando hay ?editar=ID, volvemos a mostrar la sección permisos automáticamente -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Activa la sección permisos para que el usuario no pierda el contexto
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active-section'));
+            const sec = document.getElementById('permisos-section');
+            if (sec) sec.classList.add('active-section');
+        });
+    </script>
+    {% endif %}
+
+
   {%endblock%}
   

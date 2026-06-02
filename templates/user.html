@@ -41,11 +41,15 @@
   <div class="lv-nav-item lv-dropdown lv-dropdown--right">
     <a href="#" class="lv-dropdown-toggle">{{ current_user.nombre }}</a>
     <ul class="lv-dropdown-menu">
-      <li><a class="lv-dropdown-item" href="#">Mi perfil</a></li>
-      <li><a class="lv-dropdown-item" href="#">Carrito
+      <li><a class="lv-dropdown-item" href="#miPerfil">Mi perfil</a></li>
+      <li><a class="lv-dropdown-item" href="#Carrito">Carrito
         <span id="cart-badge" class="cart-badge" style="display:none;">0</span>
       </a></li>
-      <li><a class="lv-dropdown-item" href="/signout">Cerrar sesión</a></li>
+      <li>
+        <form class="lv-dropdown-item-form" method="GET" action="{{ url_for('signout') }}">
+    <button type="submit" class="lv-dropdown-item-btn">Cerrar sesión</button>
+</form>
+      </li>
     </ul>
   </div>
 </div>
@@ -66,24 +70,19 @@
     <h2 class="lv-category-title" id="Essential">Essential</h2>
     <div class="lv-product-grid">
       {% for L in essential %}
-      <div class="lv-product-card">
-        <div class="lv-card-img-wrapper">
-          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[4]) }}" alt="{{ L[0] }}">
-        </div>
-        <div class="lv-card-content">
-          <h3 class="lv-card-title">{{ L[0] }}</h3>
-          <div class="lv-card-price">${{ "%.2f"|format(L[3]) }}</div>
-          <a href="#" class="lv-card-btn">Añadir al carrito &nbsp; &nbsp;
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" y1="12" x2="20" y2="12"/>
-              <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      {% endfor %}
+<div class="lv-product-card">
+  <div class="lv-card-img-wrapper">
+    <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[7]) }}" alt="{{ L[1] }}">
+  </div>
+  <div class="lv-card-content">
+    <h3 class="lv-card-title">{{ L[1] }}</h3>
+    <div class="lv-card-price">${{ "%.2f"|format(L[6]) }}</div>
+    <form method="POST" action="{{ url_for('añadir_al_carrito', product_id=L[0]) }}">
+      <button type="submit" class="lv-card-btn">Añadir al carrito +</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
     </div>
   </div>
 
@@ -92,28 +91,19 @@
     <h2 class="lv-category-title" id="Kids">Kids</h2>
     <div class="lv-product-grid">
       {% for L in kids %}
-      <div class="lv-product-card">
-        <div class="lv-card-img-wrapper">
-          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[5]) }}" alt="{{ L[0] }}">
-        </div>
-        <div class="lv-card-content">
-          <h3 class="lv-card-title">{{ L[1] }}</h3>
-          <div class="lv-card-price">${{ "%.2f"|format(L[4]) }}</div>
-          <form method="POST" action="/add_to_cart">
-          <input type="hidden" name="product_id" value="{{ L[0] }}">
-          <button type="submit" class="lv-card-btn">
-            Añadir al carrito &nbsp; &nbsp;
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" y1="12" x2="20" y2="12"/>
-              <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-            </button>
-          </form>
-        </div>
-      </div>
-      {% endfor %}
+<div class="lv-product-card">
+  <div class="lv-card-img-wrapper">
+    <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[7]) }}" alt="{{ L[1] }}">
+  </div>
+  <div class="lv-card-content">
+    <h3 class="lv-card-title">{{ L[1] }}</h3>
+    <div class="lv-card-price">${{ "%.2f"|format(L[6]) }}</div>
+    <form method="POST" action="{{ url_for('añadir_al_carrito', product_id=L[0]) }}">
+      <button type="submit" class="lv-card-btn">Añadir al carrito +</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
     </div>
   </div>
 
@@ -122,24 +112,19 @@
     <h2 class="lv-category-title" id="Edu">Edu</h2>
     <div class="lv-product-grid">
       {% for L in edu %}
-      <div class="lv-product-card">
-        <div class="lv-card-img-wrapper">
-          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[4]) }}" alt="{{ L[0] }}">
-        </div>
-        <div class="lv-card-content">
-          <h3 class="lv-card-title">{{ L[0] }}</h3>
-          <div class="lv-card-price">${{ "%.2f"|format(L[3]) }}</div>
-          <a href="#" class="lv-card-btn">Añadir al carrito &nbsp; &nbsp;
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" y1="12" x2="20" y2="12"/>
-              <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      {% endfor %}
+<div class="lv-product-card">
+  <div class="lv-card-img-wrapper">
+    <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[7]) }}" alt="{{ L[1] }}">
+  </div>
+  <div class="lv-card-content">
+    <h3 class="lv-card-title">{{ L[1] }}</h3>
+    <div class="lv-card-price">${{ "%.2f"|format(L[6]) }}</div>
+    <form method="POST" action="{{ url_for('añadir_al_carrito', product_id=L[0]) }}">
+      <button type="submit" class="lv-card-btn">Añadir al carrito +</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
     </div>
   </div>
 
@@ -147,25 +132,17 @@
   <div class="lv-category">
     <h2 class="lv-category-title" id="Executive">Subcripciones Executive</h2>
     <div class="lv-product-grid">
-      {% for executive in executive %}
-      <div class="lv-product-card">
-        <div class="lv-card-img-wrapper">
-        </div>
-        <div class="lv-card-content">
-          <h3 class="lv-card-title">{{ executive[0] }}</h3>
-          <div class="lv-card-price">${{ "%.2f"|format(executive[1]) }}</div>
-          <button class="lv-card-btn" data-id="{{ executive[0] }}">
-              Añadir al carrito &nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" y1="12" x2="20" y2="12"/>
-            <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      {% endfor %}
+     {% for E in executive %}
+<div class="lv-product-card">
+  <div class="lv-card-content">
+    <h3 class="lv-card-title">{{ E[1] }}</h3>
+    <div class="lv-card-price">${{ "%.2f"|format(E[2]) }}</div>
+    <form method="POST" action="{{ url_for('añadir_plan_al_carrito', plan_id=E[0]) }}">
+      <button type="submit" class="lv-card-btn">Añadir al carrito +</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
     </div>
   </div>
 
@@ -174,29 +151,110 @@
     <h2 class="lv-category-title" id="Pro">Pro</h2>
     <div class="lv-product-grid">
       {% for L in pro %}
-      <div class="lv-product-card">
-        <div class="lv-card-img-wrapper">
-          <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[4]) }}" alt="{{ L[0] }}">
-        </div>
-        <div class="lv-card-content">
-          <h3 class="lv-card-title">{{ L[0] }}</h3>
-          <div class="lv-card-price">${{ "%.2f"|format(L[3]) }}</div>
-          <!-- En cada tarjeta de producto -->
-          <button class="lv-card-btn" data-id="{{ L[0] }}">
-              Añadir al carrito &nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" 
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" y1="12" x2="20" y2="12"/>
-            <line x1="12" y1="4" x2="12" y2="20"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      {% endfor %}
+<div class="lv-product-card">
+  <div class="lv-card-img-wrapper">
+    <img class="lv-card-img" src="{{ url_for('static', filename='img/' + L[7]) }}" alt="{{ L[1] }}">
+  </div>
+  <div class="lv-card-content">
+    <h3 class="lv-card-title">{{ L[1] }}</h3>
+    <div class="lv-card-price">${{ "%.2f"|format(L[6]) }}</div>
+    <form method="POST" action="{{ url_for('añadir_al_carrito', product_id=L[0]) }}">
+      <button type="submit" class="lv-card-btn">Añadir al carrito +</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
     </div>
   </div>
+<section id="miPerfil">
+  <h3 style="font-size: clamp(2rem, 4vw, 4rem); font-weight: 600;">Mi perfil</h3>
+  <div class="separador"></div>
+<div class="Mis dispositivos">
+  <h2 class="lv-category-title">Mis dispositivos</h2>
+  <table class="lv-product-table">
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Serial Number</th>
+                        <th>Purchase Date</th>
+                        <th>Warranty End</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in rows %}
+              <tr>
+              <td>{{producto['product_id']}}</td>
+              <td>{{producto['serial_number']}}</td>
+              <td>{{producto['purchase_date']}}</td>
+              <td>{{producto['warranty_end']}}</td>
+              <td>{{producto['status']}}</td>
+              </tr>
+              {% endfor %}
+                </tbody>
+            </table>
+    <div class="separadort"></div>
+  <div class="añadir_dispositivo">
+    <h4>Añadir Dispositivo</h4>
+    <form class="lv-search-form" method="POST" action="{{ url_for('add_user_product') }}">
+    <input class="lv-search-input" type="text" placeholder="0000-0000-0000-0000" name="serial_number" required>
+    <div class="lv-search-divider"></div>
+    <button class="lv-search-btn" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="4" x2="12" y2="20"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+        </svg>
+    </button>
+    </form>
+  </div>
+  <div class="separadort"></div>
+  <div class="separadort"></div>
+  <div class="carrito" id="Carrito">
+    <h2 class="lv-category-title">Carrito</h2>
+  {% if items %}
+    <table class="lv-product-table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <img src="{{ url_for('static', filename='img/' + item.image) }}" 
+                         style="width:50px; border-radius:4px; margin-right:10px;">
+                    {{ item.name }}
+                </td>
+                <td>${{ "%.2f"|format(item.price) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ "%.2f"|format(item.subtotal) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"><strong>Total</strong></td>
+                <td><strong>${{ "%.2f"|format(total) }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
 
+    {% else %}
+    <p style="color:#777; margin-top:30px;">Tu carrito está vacío.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="mis pedidos">
+
+</div>
+</section>
+<section id="carrito">
 </section>
   </section>
   <footer>
