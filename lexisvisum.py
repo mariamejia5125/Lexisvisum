@@ -1,6 +1,6 @@
+import pymysql
 from flask import Flask, jsonify, render_template, url_for, request, redirect, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import pymysql
 from flask_mysqldb import MySQL
 from config import config
 from flask_login import current_user, login_user, logout_user, LoginManager, login_required
